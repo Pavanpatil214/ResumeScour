@@ -26,9 +26,9 @@ jobs:
             echo "ENVIRONMENT=dev" >> $GITHUB_ENV
 
       - name: Print the selected environment
-        run: echo "Selected environment ${{ env.ENVIRONMENT }}"
+        run: echo "Selected environment: ${{ env.ENVIRONMENT }}"
 
       - name: Print environment variable from selected environment
         env:
-          ENV_VALUE: ${{ env.ENV_VALUE }}
-        run: echo "The environment variable from the selected environment is $ENV_VALUE"
+          ENV_VALUE: ${{ env.ENVIRONMENT }}  # Ensure correct variable here
+        run: echo "The environment is $ENV_VALUE"
