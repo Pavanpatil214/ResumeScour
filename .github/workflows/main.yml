@@ -11,23 +11,14 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    environment: ${{ github.ref == 'refs/heads/main' && 'prod' || github.ref == 'refs/heads/qa' && 'qa' || 'dev' }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set environment based on branch
-        id: set-env
-        run: |
-          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
-            echo "ENVIRONMENT=prod" >> $GITHUB_ENV
-          elif [[ "${{ github.ref }}" == "refs/heads/qa" ]]; then
-            echo "ENVIRONMENT=qa" >> $GITHUB_ENV
-          else
-            echo "ENVIRONMENT=dev" >> $GITHUB_ENV
-          fi
-
       - name: Print the selected environment
-        run: echo "Selected environment ${{ env.ENVIRONMENT }}"
+        run: echo "Selected environment ${{ github.ref == 'refs/heads/main' && 'prod' || github.ref == 'refs/heads/qa' && 'qa' || 'dev' }}"
 
       - name: Print environment variable from selected environment
         run: echo "The environment variable from the selected environment is ${{ vars.ENV_VALUE }}"
