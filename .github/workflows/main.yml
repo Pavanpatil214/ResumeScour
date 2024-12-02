@@ -30,6 +30,4 @@ jobs:
         run: echo "Selected environment ${{ env.ENVIRONMENT }}"
 
       - name: Print environment variable from selected environment
-        env:
-          ENV_VALUE: ${{ env.ENV_VALUE }}
-        run: echo "The environment variable from the selected environment is $ENV_VALUE"
+        run: echo "The environment variable from the selected environment is ${{ vars.ENV_VALUE }}"
