@@ -1,0 +1,23 @@
+name: Access GitHub Environment Variables
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+      - qa
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    environment: 
+      name: ${{ github.ref == 'main' || github.ref == 'dev' || 'qa' }}  # Dynamically choose environment
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Print environment variables
+        run: |
+          echo "The environment variable from the selected environment is $ENV_VALUE"
