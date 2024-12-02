@@ -32,4 +32,4 @@ jobs:
       - name: Print environment variable from selected environment
         env:
           MY_ENV_VAR: ${{ secrets.MY_ENV_VAR }}
-        run: echo "The environment variable from the selected environment is $MY_ENV_VAR"
+        run: echo "The environment variable from the selected environment is $ENV_VALUE"
