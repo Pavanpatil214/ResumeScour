@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Print the selected environment
-        run: echo "Selected environment: ${{ github.event.deployment.environment }}"
+        run: echo "Selected environment ${{ github.ref }}"
 
       - name: Print environment variable from selected environment
         run: echo "The environment variable from the selected environment is $MY_ENV_VAR"
