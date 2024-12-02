@@ -22,3 +22,6 @@ jobs:
 
       - name: Print environment variable from selected environment
         run: echo "The environment variable from the selected environment is ${{ vars.ENV_VALUE }}"
+        
+      - name: Print environment secrets from selected environment
+        run: echo "The environment variable from the selected secrets is ${{ secrets.PASS }}"
