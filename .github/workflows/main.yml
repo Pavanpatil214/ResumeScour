@@ -32,4 +32,4 @@ jobs:
         run: echo "Selected environment ${{ env.ENVIRONMENT }}"
 
       - name: Print environment secrets from selected environment
-        run: echo "The environment secret from the selected environment is ${{ secrets.PASS }}"
+        run: echo "The environment varable ${{ vars.ENV_VALUE }} and secret from the selected environment is ${{ secrets.PASS }}"
