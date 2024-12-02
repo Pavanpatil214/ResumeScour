@@ -10,16 +10,26 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
-    # Dynamically choose the environment based on the branch name
-    environment: ${{ github.ref == 'refs/heads/main' && 'prod' || github.ref == 'refs/heads/qa' && 'qa' || 'dev' }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Set environment based on branch
+        id: set-env
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "ENVIRONMENT=prod" >> $GITHUB_ENV
+          elif [[ "${{ github.ref }}" == "refs/heads/qa" ]]; then
+            echo "ENVIRONMENT=qa" >> $GITHUB_ENV
+          else
+            echo "ENVIRONMENT=dev" >> $GITHUB_ENV
+          fi
+
       - name: Print the selected environment
-        run: echo "Selected environment ${{ github.ref }}"
+        run: echo "Selected environment ${{ env.ENVIRONMENT }}"
 
       - name: Print environment variable from selected environment
+        env:
+          MY_ENV_VAR: ${{ secrets.MY_ENV_VAR }}
         run: echo "The environment variable from the selected environment is $MY_ENV_VAR"
