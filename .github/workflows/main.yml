@@ -4,20 +4,22 @@ on:
   push:
     branches:
       - main
-      - dev
       - qa
+      - dev
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
-    environment: 
-      name: ${{ github.ref == 'main' || github.ref == 'dev' || 'qa' }}  # Dynamically choose environment
+    
+    # Dynamically choose the environment based on the branch name
+    environment: ${{ github.ref == 'refs/heads/main' && 'prod' || github.ref == 'refs/heads/qa' && 'qa' || 'dev' }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Print environment variables
-        run: |
-          echo "The environment variable from the selected environment is $ENV_VALUE"
+      - name: Print the selected environment
+        run: echo "Selected environment: ${{ github.event.deployment.environment }}"
+
+      - name: Print environment variable from selected environment
+        run: echo "The environment variable from the selected environment is $MY_ENV_VAR"
