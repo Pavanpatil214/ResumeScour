@@ -11,6 +11,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    environment: ${{ github.ref == 'refs/heads/main' && 'prod' || github.ref == 'refs/heads/qa' && 'qa' || 'dev' }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -24,12 +26,9 @@ jobs:
             echo "ENVIRONMENT=qa" >> $GITHUB_ENV
           else
             echo "ENVIRONMENT=dev" >> $GITHUB_ENV
-          fi
 
       - name: Print the selected environment
         run: echo "Selected environment ${{ env.ENVIRONMENT }}"
 
       - name: Print environment variable from selected environment
-        env:
-          MY_ENV_VAR: ${{ secrets.MY_ENV_VAR }}
-        run: echo "The environment variable from the selected environment is $ENV_VALUE"
+        run: echo "The environment variable from the selected environment is ${{ env.ENV_VALUE }}"
